@@ -1,0 +1,8 @@
+F.I.R.S.T principles.
+
+Principles, not rules, that we may follow when writing tests:
+ - Fast: unit test should be fast. Faster test - faster feedback
+ - Independent
+ - Repeatable
+ - Self-validation
+ - Thorough
