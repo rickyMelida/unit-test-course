@@ -6,3 +6,8 @@ Principles, not rules, that we may follow when writing tests:
  - Repeatable
  - Self-validation
  - Thorough
+
+ Spies vs mocks
+  - Spies are not directly injected into SUT
+  - Original funtionality is preserved with Spies
+  - Spies usually track method calls 
