@@ -1,0 +1,17 @@
+POST http://localhost:3001/register/
+Content-Type: application/json
+
+{
+    "userName": "user1",
+    "password": "pass"
+}
+###
+
+POST http://localhost:3001/login/
+Content-Type: application/json
+
+{
+    "userName": "user1",
+    "password": "pass"
+}
+###
