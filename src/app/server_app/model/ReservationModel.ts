@@ -1,7 +1,7 @@
 
 
 export type Reservation = {
-    id: string,
+    id: string | undefined,
     room: string,
     user: string,
     startDate: string,
