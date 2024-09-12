@@ -1,34 +1,33 @@
+import { IncomingMessage, ServerResponse } from "http";
 import { Authorizer } from "../../../app/server_app/auth/Authorizer";
 import { ReservationsDataAccess } from "../../../app/server_app/data/ReservationsDataAccess";
 import { ReservationsHandler } from "../../../app/server_app/handlers/ReservationsHandler";
 import { Reservation } from "../../../app/server_app/model/ReservationModel";
-import { IncomingMessage, ServerResponse } from "http";
 import {
   HTTP_CODES,
   HTTP_METHODS,
 } from "../../../app/server_app/model/ServerModel";
 
 const getRequestBodyMock = jest.fn();
-jest.mock("./../../app/server_app/utils/Utils", () => ({
+jest.mock("../../../app/server_app/utils/Utils", () => ({
   getRequestBody: () => getRequestBodyMock(),
 }));
 
-describe("ReservationHandler test suite", () => {
+describe("ReservationsHandler test suite", () => {
   let sut: ReservationsHandler;
 
   const request = {
-    method: "undefined",
+    method: "",
     headers: {
-      authorization: "undefined",
+      authorization: "",
     },
-    url: "string | undefined",
+    url: "",
   };
   const responseMock = {
     writeHead: jest.fn(),
     write: jest.fn(),
     statusCode: 0,
   };
-
   const authorizerMock = {
     registerUser: jest.fn(),
     validateToken: jest.fn(),
@@ -43,18 +42,17 @@ describe("ReservationHandler test suite", () => {
   };
 
   const someReservation: Reservation = {
-    id: undefined,
+    id: "",
     endDate: new Date().toDateString(),
     startDate: new Date().toDateString(),
-    room: "someroom",
+    room: "someRoom",
     user: "someUser",
   };
-
   const someReservationId = "1234";
 
   beforeEach(() => {
     sut = new ReservationsHandler(
-      request as unknown as IncomingMessage,
+      request as IncomingMessage,
       responseMock as any as ServerResponse,
       authorizerMock as any as Authorizer,
       reservationsDataAccessMock as any as ReservationsDataAccess
@@ -65,7 +63,7 @@ describe("ReservationHandler test suite", () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-    request.url = "undefined";
+    request.url = "";
     responseMock.statusCode = 0;
   });
 
@@ -253,7 +251,9 @@ describe("ReservationHandler test suite", () => {
 
       await sut.handleRequest();
 
-      expect(reservationsDataAccessMock.updateReservation).toBeCalledTimes(2);
+      expect(
+        reservationsDataAccessMock.updateReservation
+      ).toHaveBeenCalledTimes(2);
       expect(reservationsDataAccessMock.updateReservation).toHaveBeenCalledWith(
         someReservationId,
         "startDate",
@@ -337,7 +337,7 @@ describe("ReservationHandler test suite", () => {
 
     await sut.handleRequest();
 
-    expect(responseMock.write).not.toBeCalled();
-    expect(responseMock.writeHead).not.toBeCalled();
+    expect(responseMock.write).not.toHaveBeenCalled();
+    expect(responseMock.writeHead).not.toHaveBeenCalled();
   });
 });
